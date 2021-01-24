@@ -1,0 +1,117 @@
+\documentclass[10pt ]{beamer}
+\usepackage[czech]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{times}
+\usepackage{listings}
+\usepackage{graphics} 
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usetheme{Madrid}
+\setbeamertemplate{footline}[frame number]
+
+\definecolor{lightgray}{RGB}{244,244,244}
+\definecolor{myred}{RGB}{204,0,0}
+
+\lstset{
+	basicstyle=\footnotesize,
+	backgroundcolor=\color{lightgray}, 
+	keywordstyle=\color{myred},
+	frame=single,	
+	language=C++,
+	tabsize=4,
+}
+
+\title{Typografie a~publikování\,--\,5.~projekt}
+\subtitle{Bubble sort}
+\author{Tomáš Hrúz\texorpdfstring{\\ xhruzt00@vutbr.cz}{}}
+\date{\today}
+\institute
+{
+	Vysoké učení technické v~Brně\\
+	Fakulta informačních technologií
+}
+
+
+\begin{document}
+\maketitle
+
+
+
+\begin{frame}{Obsah}
+\tableofcontents[hideallsubsections]
+\end{frame}
+
+\section{Co je bubble sort?}
+
+\begin{frame}{Co je bubble sort?}
+\begin{itemize}
+\item prvky s~vyšší hodnotou „probublávají“ na konec seznamu, z~toho pojem bubble sort
+\item implementačně jednoduchý řadicí algoritmus
+\item bubble sort opakovaně prochází seznam, přičemž porovnává každé dva sousedící prvky, a~pokud nejsou ve správném pořadí, prohodí je
+\item neefektivní, využívá se hlavně pro výukové účely
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Co je bubble sort?}
+\centering
+\includegraphics[scale=0.25]{bubble.eps}
+\end{frame}
+
+\begin{frame}{Co je bubble sort?}
+\begin{itemize}
+\item univerzální
+\item pracuje lokálně
+\item stabilní
+\item přirozený řadící algoritmus (částečně seřazený seznam zpracuje rychleji než neseřazený)
+\item Algoritmus prohazuje prvky v~průchodu seznamu. V~případě, že algoritmus v~průchodu neprohodil žádné dva prvky, tak žádné další prvky již nikdy neprohodí. Tudíž řazení můžeme ukončit s~tím, že seznam je seřazen
+\end{itemize}
+\end{frame}
+
+\section{Algoritmus}
+\begin{frame}[fragile]{Algoritmus}
+\begin{itemize}
+\item Bubblesort zapísaný v~C++
+\end{itemize}
+\begin{lstlisting}[language=C++]
+void bubbleSort(int * array, int size){
+   for(int i = 0; i < size - 1; i++){
+       for(int j = 0; j < size - i - 1; j++){
+           if(array[j+1] < array[j]){
+               int tmp = array[j + 1];
+               array[j + 1] = array[j];
+               array[j] = tmp;
+           }   
+       }   
+   }   
+}  
+\end{lstlisting}
+\end{frame}
+
+\section{Výhody}
+\begin{frame}{Výhody}
+\begin{itemize}
+\item z~hlediska naprogramování nejjednodušším algoritmem pro řazení
+\item nemění pozici prvků, které jsou při porovnávání vyhodnoceny jako ekvivalentní
+\item jeden z~mála algoritmů, který nevyužívá skoky. V~minulosti na řazení páskových médií
+\item používá se pro výuku programování
+\end{itemize}
+\end{frame}
+
+\section{Nevýhody}
+\begin{frame}{Nevýhody}
+\begin{itemize}
+\item pro řazení velkých polí je bublinkové řazení nevhodné(seřazení desetiprvkového pole trvá jednotku času, pak při bublinkovém řazení stokrát delšího (tisíciprvkového pole) spotřebujeme 10000 jednotek času, zatímco kvalitní algoritmus by potřeboval pouze 200 jednotek času)
+\item zbytečná porovnání při řazení seznamu s~nejnižším prvkem na konci(Tento problém řeší modifikace algoritmu nazvaná Shaker sort)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Použité zdroje}
+	\begin{thebibliography}{10}
+		\bibitem[Algoritmy.net]{algoritmy} Algoritmy.net
+		\newblock \texttt{http://www.algoritmy.net/article/3/Bubble-sort;}
+		\bibitem[Wikipedia]{wikipedia} Wikipedia
+		\newblock \texttt{https://cs.wikipedia.org/wiki/Bublinkové-řazení}
+	\end{thebibliography}
+\end{frame}
+
+\end{document}
