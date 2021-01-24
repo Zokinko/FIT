@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<list>
+  <Domácnost Name="Slovo">
+    <Czech></Czech>
+    <English></English>
+    <Note></Note>
+  </Domácnost>
+  <Příroda Name="Slovo">
+    <Czech></Czech>
+    <English></English>
+    <Note></Note>
+  </Příroda>
+  <Zvířata Name="Slovo">
+    <Czech></Czech>
+    <English></English>
+    <Note></Note>
+  </Zvířata>
+  <Domácnost Name="stůl">
+    <Czech>stůl</Czech>
+    <English>table</English>
+    <Note>na jídlo</Note>
+  </Domácnost>
+  <Domácnost Name="židle">
+    <Czech>židle</Czech>
+    <English>chair</English>
+    <Note>na sezení</Note>
+  </Domácnost>
+  <Domácnost Name="lednice">
+    <Czech>lednice</Czech>
+    <English>fridge</English>
+    <Note>na chlazení</Note>
+  </Domácnost>
+  <Domácnost Name="lampa">
+    <Czech>lampa</Czech>
+    <English>lamp</English>
+    <Note>na svícení</Note>
+  </Domácnost>
+  <Domácnost Name="podlaha">
+    <Czech>podlaha</Czech>
+    <English>floor</English>
+    <Note>na chození</Note>
+  </Domácnost>
+  <Zvířata Name="pes">
+    <Czech>pes</Czech>
+    <English>dog</English>
+    <Note>nej přítel</Note>
+  </Zvířata>
+  <Zvířata Name="kočka">
+    <Czech>kočka</Czech>
+    <English>cat</English>
+    <Note>drápek</Note>
+  </Zvířata>
+  <Zvířata Name="had">
+    <Czech>had</Czech>
+    <English>snake</English>
+    <Note>plazí se</Note>
+  </Zvířata>
+  <Zvířata Name="pták">
+    <Czech>pták</Czech>
+    <English>bird</English>
+    <Note>létá</Note>
+  </Zvířata>
+</list>
