@@ -1,0 +1,105 @@
+﻿<Page x:Class="ITUTEST.Pages.SettingsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ITUTEST.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800" Background="{DynamicResource ThemeBrush}"
+      Title="SettingsPage">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="{DynamicResource NavigationBarBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Row="0" Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                    <ColumnDefinition Width="4*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Name="learnPanel" Grid.Column="0" Grid.Row="0" Height="30" Margin="1 5">
+                    <Border  BorderBrush="{DynamicResource ThemeBrush}" Style="{StaticResource navigationBarBorder}" >
+                        <Button  Content="Zpět" IsCancel="True" x:Name="btnBackToMenu" Click="btnBackToMenu_Click" Style="{StaticResource buttonNavigationStyle}" Background="{DynamicResource ThemeBrush}"></Button>
+                    </Border>
+                </StackPanel>
+                
+            </Grid>
+
+            <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Nastavení" Style="{StaticResource navigationTextBlock}"></TextBlock>
+        </Grid>
+
+
+        <StackPanel  Grid.Row="1" Grid.Column="1" Grid.RowSpan="2">
+            <TextBlock Margin="2 30 2 10" Text="Výběr stylu" FontSize="20" HorizontalAlignment="Center"/>
+            <StackPanel Margin="1 5" Grid.Column="0" Grid.Row="1">
+                <Border BorderBrush="Turquoise" Style="{StaticResource roundedBorderStyle}"  >
+                    <Button x:Name="btnZero"  Style="{StaticResource buttonVocabularyStyle}"
+                                Background="MintCream" Click="btnZero_Click">
+                        <TextBlock Text="Default" Foreground="Black"/>
+                    </Button>
+                </Border>
+            </StackPanel>
+
+            <StackPanel Margin="1 5" Grid.Column="0" Grid.Row="1">
+                <Border BorderBrush="{StaticResource FreshPurpleColor}" Style="{StaticResource roundedBorderStyle}"  >
+                    <Button x:Name="btnOne"  Style="{StaticResource buttonVocabularyStyle}"
+                                Background="{StaticResource FreshMintColor}" Click="btnOne_Click">
+                        <TextBlock Text="Fresh Mint" Foreground="Black"/>
+                    </Button>
+                </Border>
+            </StackPanel>
+
+            <StackPanel Margin="1 5" Grid.Column="0" Grid.Row="1">
+                <Border BorderBrush="{DynamicResource SexyPinkColor}" Style="{StaticResource roundedBorderStyle}"  >
+                    <Button x:Name="btnThree"  Style="{StaticResource buttonVocabularyStyle}" Background="{DynamicResource LightGreenColor}" Click="btnThree_Click">
+                        <TextBlock Text="Melon" Foreground="Black"/>
+                    </Button>
+                </Border>
+            </StackPanel>
+
+            <StackPanel Margin="1 5" Grid.Column="0" Grid.Row="1">
+                <Border BorderBrush="{DynamicResource LightGreenColor}" Style="{StaticResource roundedBorderStyle}"  >
+                    <Button x:Name="btnFour"  Style="{StaticResource buttonVocabularyStyle}"
+                                Background="{DynamicResource SexyPinkColor}" Click="btnFour_Click">
+                        <TextBlock Text="Bubblegum" Foreground="Black"/>
+                    </Button>
+                </Border>
+            </StackPanel>
+
+            <StackPanel Margin="1 5" Grid.Column="0" Grid.Row="1">
+                <Border BorderBrush="{DynamicResource SandyBrownColor}" Style="{StaticResource roundedBorderStyle}"  >
+                    <Button x:Name="btnFive"  Style="{StaticResource buttonVocabularyStyle}"
+                                Background="{DynamicResource SandyBeigeColor}" Click="btnFive_Click">
+                        <TextBlock Text="Sandman" Foreground="Black"/>
+                    </Button>
+                </Border>
+            </StackPanel>
+
+            <StackPanel Margin="1 5" Grid.Column="0" Grid.Row="1">
+                <Border BorderBrush="{DynamicResource DarkGray}" Style="{StaticResource roundedBorderStyle}"  >
+                    <Button x:Name="btnSix"  Style="{StaticResource buttonVocabularyStyle}"
+                                Background="{DynamicResource LightGray}"
+                                  Click="btnSix_Click" 
+                                >
+                        <TextBlock Text="Darkmode" Foreground="White"/>
+                    </Button>
+                </Border>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Page>

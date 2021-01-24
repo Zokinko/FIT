@@ -1,0 +1,55 @@
+﻿<Page x:Class="ITUTEST.Pages.MenuPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ITUTEST.Pages"
+      xmlns:windows="clr-namespace:ITUTEST.Windows"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800" Background="{DynamicResource ThemeBrush}"
+      Title="MenuPage">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Row="0" Grid.Column="1" Margin="0 20 20 20">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <StackPanel Name="learnPanel" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center">
+                <Border BorderBrush="{DynamicResource NavigationBarBrush}" Style="{StaticResource roundedBorderStyle}" >
+                    <Button Content="Učení" x:Name="btnMenuToLearn" Click="btnMenuToLearn_Click" Background="{DynamicResource NavigationBarBrush}" Style="{StaticResource buttonMenuStyle}"></Button>
+                </Border>
+            </StackPanel>
+            <StackPanel Name="testPanel" Grid.Column="0" Grid.Row="1" VerticalAlignment="Center">
+                <Border BorderBrush="{DynamicResource NavigationBarBrush}" Style="{StaticResource roundedBorderStyle}" >
+                    <Button Content="Test" x:Name="btnMenuToTest" Click="btnMenuToTest_Click" Background="{DynamicResource NavigationBarBrush}" Style="{StaticResource buttonMenuStyle}"></Button>
+                </Border>
+            </StackPanel>
+            <StackPanel Name="editWordsPanel" Grid.Column="0" Grid.Row="2" VerticalAlignment="Center">
+                <Border BorderBrush="{DynamicResource NavigationBarBrush}" Style="{StaticResource roundedBorderStyle}" >
+                    <Button Content="Úprava slovíček" x:Name="btnMenuToVocabulary" Click="btnMenuToVocabulary_Click" Background="{DynamicResource NavigationBarBrush}" Style="{StaticResource buttonMenuStyle}"></Button>
+                </Border>
+            </StackPanel>
+            <StackPanel Name="settingsPanel" Grid.Column="0" Grid.Row="3" VerticalAlignment="Center">
+                <Border BorderBrush="{DynamicResource NavigationBarBrush}" Style="{StaticResource roundedBorderStyle}" >
+                    <Button Content="Nastavení" x:Name="btnSettings" Click="btnSettings_Click" Background="{DynamicResource NavigationBarBrush}" Style="{StaticResource buttonMenuStyle}"></Button>
+                </Border>
+            </StackPanel>
+            <StackPanel Name="exitPanel" Grid.Column="0" Grid.Row="4" VerticalAlignment="Center">
+                <Border BorderBrush="{DynamicResource NavigationBarBrush}" Style="{StaticResource roundedBorderStyle}" >
+                    <Button Content="Odejít" x:Name="btnExit" Click="btnExit_Click" Background="{DynamicResource NavigationBarBrush}" Style="{StaticResource buttonMenuStyle}"></Button>
+                </Border>
+            </StackPanel>
+           
+
+        </Grid>
+
+        <Image Grid.Row="0" Grid.Column="0" Margin="80" Source="logo.png"/>
+    </Grid>
+</Page>

@@ -1,0 +1,85 @@
+﻿<Page x:Class="ITUTEST.Pages.TestPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:ITUTEST.Pages"
+      xmlns:converter="clr-namespace:ITUTEST.Converters"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800" Background="{DynamicResource ThemeBrush}"
+      Title="TestPage">
+    <Page.Resources>
+        <converter:BoolToVisibilityConverter x:Key="boolToVisibilityConverter" />
+    </Page.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="4*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <!--Navigacne tlacidla-->
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Background="{DynamicResource NavigationBarBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                    <ColumnDefinition Width="3*"></ColumnDefinition>
+                    <ColumnDefinition Width="4*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <StackPanel Name="testPanel" Grid.Column="0" Grid.Row="0" Height="30" Margin="1 5">
+                    <Border BorderBrush="{DynamicResource ThemeBrush}" Style="{StaticResource navigationBarBorder}" >
+                        <Button  Content="Zpět" IsCancel="True" x:Name="btnBackToMenu" Click="btnBackToMenu_Click" Style="{StaticResource buttonNavigationStyle}" Background="{DynamicResource ThemeBrush}"></Button>
+                    </Border>
+                </StackPanel>
+                <StackPanel Name="testPanel2" Grid.Column="1" Grid.Row="0" Height="30" Margin="0 5">
+                    <Border BorderBrush="{DynamicResource ThemeBrush}" Style="{StaticResource navigationBarBorder}" Visibility="{Binding Path=IsChecked,ElementName=cbCategoryPick, Converter={StaticResource boolToVisibilityConverter}, ConverterParameter=False}" >
+                        <Button Content="Kategorie" x:Name="btnBackToCategory" Click="btnBackToCategory_Click" Style="{StaticResource buttonNavigationStyle}" Background="{DynamicResource ThemeBrush}" Visibility="{Binding Path=IsChecked,ElementName=cbCategoryPick, Converter={StaticResource boolToVisibilityConverter}, ConverterParameter=False}"></Button>
+                    </Border>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        
+        <!--Nadpis-->
+        <TextBlock Grid.Column="1" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Test" Style="{StaticResource navigationTextBlock}"></TextBlock>
+        <TextBlock x:Name="tbScore" Margin="0 0 10 0" Grid.Column="2" Grid.Row="0" Text="" HorizontalAlignment="Right" VerticalAlignment="Center"></TextBlock>
+
+        <!--prva cast zobrazenia vyber kategorie-->
+        <ListBox x:Name="lbCategories" Grid.Row="2" Grid.Column="1" Grid.RowSpan="2" Visibility="{Binding Path=IsChecked,ElementName=cbCategoryPick, Converter={StaticResource boolToVisibilityConverter}, ConverterParameter=True}"></ListBox>
+        <CheckBox x:Name="cbCategoryPick" Margin="2" Grid.Column="1" Grid.Row="6" Visibility="Hidden" />
+        <StackPanel Grid.Column="1" Grid.Row="4" Height="30" Margin="1 5">
+            <Border BorderBrush="{DynamicResource NavigationBarBrush}" Style="{StaticResource roundedBorderStyle}" >
+                <Button x:Name="btnVybratKategorii" Content="Vybrat" Click="btnVybratKategorii_Click" Style="{StaticResource buttonVocabularyStyle}"
+                        Background="{DynamicResource NavigationBarBrush}"
+                        Visibility="{Binding Path=IsChecked,ElementName=cbCategoryPick, Converter={StaticResource boolToVisibilityConverter}, ConverterParameter=True}"></Button>
+            </Border>
+        </StackPanel>
+
+        <!--druha cast zobrazenia a to samotne testovanie-->
+        <TextBlock x:Name="tbWordToTranslate"  Grid.Column="1" Grid.Row="2" HorizontalAlignment="Center" Style="{StaticResource testTextBlock}" Visibility="{Binding Path=IsChecked,ElementName=cbCategoryPick, Converter={StaticResource boolToVisibilityConverter}, ConverterParameter=False}"></TextBlock>
+        <TextBox   Margin="0 7" x:Name="tbTranslatedWord" Grid.Column="1" Grid.Row="3" Visibility="{Binding Path=IsChecked,ElementName=cbCategoryPick, Converter={StaticResource boolToVisibilityConverter}, ConverterParameter=False}" ></TextBox>
+        <StackPanel Grid.Column="1" Grid.Row="4" Height="30" Margin="1 5">
+            <Border BorderBrush="{DynamicResource NavigationBarBrush}" Style="{StaticResource roundedBorderStyle}" >
+                <Button x:Name="btnConfirm" Content="Potvrdit" IsDefault="True" Click="btnConfirm_Click"
+                        Visibility="{Binding Path=IsChecked,ElementName=cbCategoryPick, Converter={StaticResource boolToVisibilityConverter}, ConverterParameter=False}" 
+                        Style="{StaticResource buttonVocabularyStyle}" Background="{DynamicResource NavigationBarBrush}"></Button>
+            </Border>
+        </StackPanel>
+        
+
+        
+    </Grid>
+</Page>
