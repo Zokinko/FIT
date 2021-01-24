@@ -1,0 +1,38 @@
+﻿<Window x:Class="ITUTEST.Windows.ExitWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ITUTEST.Windows"
+        mc:Ignorable="d"
+        Title="ExitWindow" Height="350" Width="500" WindowStartupLocation="CenterScreen" Background="{DynamicResource ThemeBrush}">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Image Grid.Row="0" Source="https://www.meme-arsenal.com/memes/e6ddf9a4468ef7c03550c743c6b49352.jpg"/>
+        <TextBlock Grid.Row="1" FontSize="20" Text="Opravdu chcete odejít?" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" >
+
+            <StackPanel Margin="1 5" >
+                <Border BorderBrush="{DynamicResource NavigationBarBrush}" Style="{StaticResource roundedBorderStyle}"  >
+                    <Button x:Name="ExitButtonYes"  Style="{StaticResource buttonVocabularyStyle}"
+                                Background="{DynamicResource NavigationBarBrush}"
+                                Content="Ano"  Click="ExitButtonYes_Click" IsDefault="True"
+                                ></Button>
+                </Border>
+            </StackPanel>
+            <StackPanel Margin="1 5" >
+                <Border BorderBrush="{DynamicResource NavigationBarBrush}" Style="{StaticResource roundedBorderStyle}"  >
+                    <Button x:Name="ExitButtonNo"  Style="{StaticResource buttonVocabularyStyle}"
+                                Background="{DynamicResource NavigationBarBrush}"
+                                Content="Ne"  Click="ExitButtonNo_Click" IsDefault="True" IsCancel="True"
+                                ></Button>
+                </Border>
+            </StackPanel>
+        </StackPanel>
+
+    </Grid>
+</Window>
