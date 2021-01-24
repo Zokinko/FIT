@@ -1,0 +1,349 @@
+#!/bin/sh
+#premenne pre argumenty
+export POSIXLY_CORRECT=yes
+ARGC=$#
+ARG1=$1
+ARG2=$2
+ARG3=$3
+ARG4=$4
+DIR=$(pwd)
+
+#prvky histogramu
+HIST1=""
+HIST2=""
+HIST3=""
+HIST4=""
+HIST5=""
+HIST6=""
+HIST7=""
+HIST8=""
+HIST9=""
+
+#pocty pre normalizaciu
+MAXCOUNT=0
+COUNT1=0
+COUNT2=0
+COUNT3=0
+COUNT4=0
+COUNT5=0
+COUNT6=0
+COUNT7=0
+COUNT8=0
+COUNT9=0
+
+#normalizacia
+normalization()
+{
+    LENGHT=79 #riadok nastaveny na 79
+    if [ -t 1 ]; then #pokial je otvoreny command line tak to nastavi na jeho dlzku - 1
+        LENGHT=$(tput cols)
+        LENGHT=$((LENGHT - 1))
+    fi
+
+    HASHLENGHT=$((LENGHT - 12)) #dlzka mriezok - 12 pretoze text pred mriezkami zabera 12 znakov
+    if [ $HASHLENGHT -lt 9 ]; then
+    HASHLENGHT=9
+    fi 
+
+    #zisti najvacsi pocet mriezok
+    if [ $COUNT1 -gt $MAXCOUNT ]; then
+		MAXCOUNT=$COUNT1
+	fi
+    if [ $COUNT2 -gt $MAXCOUNT ]; then
+		MAXCOUNT=$COUNT2
+	fi
+    if [ $COUNT3 -gt $MAXCOUNT ]; then
+		MAXCOUNT=$COUNT3
+	fi
+    if [ $COUNT4 -gt $MAXCOUNT ]; then
+		MAXCOUNT=$COUNT4
+	fi
+    if [ $COUNT5 -gt $MAXCOUNT ]; then
+		MAXCOUNT=$COUNT5
+	fi
+    if [ $COUNT6 -gt $MAXCOUNT ]; then
+		MAXCOUNT=$COUNT6
+	fi
+    if [ $COUNT7 -gt $MAXCOUNT ]; then
+		MAXCOUNT=$COUNT7
+	fi
+    if [ $COUNT8 -gt $MAXCOUNT ]; then
+		MAXCOUNT=$COUNT8
+	fi
+    if [ $COUNT9 -gt $MAXCOUNT ]; then
+		MAXCOUNT=$COUNT9
+	fi
+
+    #prepocita vsetky pocty mriezok
+    FIXEDLENGHT=$((MAXCOUNT + 12))
+    if [ "$FIXEDLENGHT" -gt "$LENGHT" ]; then
+        if [ $MAXCOUNT -ne 0 ]; then
+            COUNT1=$(( COUNT1 * HASHLENGHT / MAXCOUNT ))
+            COUNT2=$(( COUNT2 * HASHLENGHT / MAXCOUNT ))
+            COUNT3=$(( COUNT3 * HASHLENGHT / MAXCOUNT ))
+            COUNT4=$(( COUNT4 * HASHLENGHT / MAXCOUNT ))
+            COUNT5=$(( COUNT5 * HASHLENGHT / MAXCOUNT ))
+            COUNT6=$(( COUNT6 * HASHLENGHT / MAXCOUNT ))
+            COUNT7=$(( COUNT7 * HASHLENGHT / MAXCOUNT ))
+            COUNT8=$(( COUNT8 * HASHLENGHT / MAXCOUNT ))
+            COUNT9=$(( COUNT9 * HASHLENGHT / MAXCOUNT ))
+            if [ "$COUNT1" -ne "0" ]; then
+                HIST1="#"
+                for nhash in $(seq 2 $COUNT1)
+                do
+                    HIST1="$HIST1#"
+                done
+            fi
+            if [ "$COUNT2" -ne "0" ]; then
+                HIST2="#"
+                for nhash in $(seq 2 $COUNT2)
+                do
+                    HIST2="$HIST2#"
+                done
+            fi
+            if [ "$COUNT3" -ne "0" ]; then
+                HIST3="#"
+                for nhash in $(seq 2 $COUNT3)
+                do
+                    HIST3="$HIST3#"
+                done
+            fi
+            if [ "$COUNT4" -ne "0" ]; then
+                HIST4="#"
+                for nhash in $(seq 2 $COUNT4)
+                do
+                    HIST4="$HIST4#"
+                done
+            fi
+            if [ "$COUNT5" -ne "0" ]; then
+                HIST5="#"
+                for nhash in $(seq 2 $COUNT5)
+                do
+                    HIST5="$HIST5#"
+                done
+            fi
+            if [ "$COUNT6" -ne "0" ]; then
+                HIST6="#"
+                for nhash in $(seq 2 $COUNT6)
+                do
+                    HIST6="$HIST6#"
+                done
+            fi
+            if [ "$COUNT7" -ne "0" ]; then
+                HIST7="#"
+                for nhash in $(seq 2 $COUNT7)
+                do
+                    HIST7="$HIST7#"
+                done
+            fi
+            if [ "$COUNT8" -ne "0" ]; then
+                HIST8="#"
+                for nhash in $(seq 2 $COUNT8)
+                do
+                    HIST8="$HIST8#"
+                done
+            fi
+            if [ "$COUNT9" -ne "0" ]; then
+                HIST9="#"
+                for nhash in $(seq 2 $COUNT9)
+                do
+                    HIST9="$HIST9#"
+                    nhash=""
+                done
+            fi
+        fi
+    fi
+}
+
+#funkcia na vypis mriezok v histograme
+hashes()
+{
+    MYHASHSTRING=$MYSIZES
+    for size in $MYHASHSTRING #porovnava velkost a podla toho pridava mriezky do pozadovaneho riadku
+    do
+        if [ "$size" -lt 100 ]; then
+        HIST1="$HIST1#"
+        COUNT1=$((COUNT1+1))
+        elif [ "$size" -lt 1024 ]; then
+        HIST2="$HIST2#"
+        COUNT2=$((COUNT2+1))
+        elif [ "$size" -lt 10240 ]; then
+        HIST3="$HIST3#"
+        COUNT3=$((COUNT3+1))
+        elif [ "$size" -lt 102400 ]; then
+        HIST4="$HIST4#"
+        COUNT4=$((COUNT4+1))
+        elif [ "$size" -lt 1048576 ]; then
+        HIST5="$HIST5#"
+        COUNT5=$((COUNT5+1))
+        elif [ "$size" -lt 10485760 ]; then
+        HIST6="$HIST6#"
+        COUNT6=$((COUNT6+1))
+        elif [ "$size" -lt 104857600 ]; then
+        HIST7="$HIST7#"
+        COUNT7=$((COUNT7+1))
+        elif [ "$size" -lt 1073741824 ]; then
+        HIST8="$HIST8#"
+        COUNT8=$((COUNT8+1))
+        elif [ "$size" -ge 1073741824 ]; then
+        HIST9="$HIST9#" 
+        COUNT9=$((COUNT9+1))                                                                                   
+        fi
+    done
+}
+
+#/homes/eva/xh/xhruzt00
+#echo "$ARGC"
+case $ARGC in
+#0 argumentov
+    0)
+        MYSIZES=$(find . -type f -print0 | xargs -0 ls -la | awk '{print int($5)}' | sort -n -r -k1) #zisti zoznam velkosti suborov
+        ND=$(find . -type d | wc -l | tr -d ' ')
+        NF=$(find . -type f | wc -l | tr -d ' ')
+        hashes
+        ;;
+#jeden argument - DIR || -n
+    1)
+        if [ -d "$ARG1" ] ; then
+            DIR=$ARG1
+            MYSIZES=$(find "$DIR" -type f -print0 | xargs -0 ls -la | awk '{print int($5)}' | sort -n -r -k1)
+            ND=$(find "$ARG1" -type d | wc -l | tr -d ' ')
+            NF=$(find "$ARG1" -type f | wc -l | tr -d ' ')
+            hashes
+        elif [ "-n" = "$ARG1" ] ; then
+            MYSIZES=$(find . -type f -print0 | xargs -0 ls -la | awk '{print int($5)}' | sort -n -r -k1)
+            ND=$(find . -type d | wc -l | tr -d ' ')
+            NF=$(find . -type f | wc -l | tr -d ' ')
+            hashes
+            normalization
+        else
+            echo "wrong arguments" >&2
+            exit 1
+        fi
+        ;;
+#dva argumenty - -i FILE_ERE || -n DIR
+    2)
+        if [ "-i" = "$ARG1" ] ; then
+            if [ "$ARG2" ] ; then
+                MYSTRING=$(find . -type f -print0 | xargs -0 ls -la | awk '{print $9}' | sort -n -r -k1 | grep -E -v "${ARG2}")
+                for REGSTRING in $MYSTRING
+                do
+                MYSIZE=$(wc -c <"$REGSTRING")
+                MYSIZES="$MYSIZES $MYSIZE"
+                done
+                ND=$(find . -type d | grep -E -v -c "$ARG2")
+                NF=$(find . -type f | grep -E -v -c "$ARG2")
+                hashes
+            else
+                echo "wrong arguments" >&2
+                exit 1
+            fi
+        elif [ "-n" = "$ARG1" ] ; then
+            if [ -d "$ARG2" ] ; then
+                DIR=$ARG2
+                MYSIZES=$(find "$DIR" -type f -print0 | xargs -0 ls -la | awk '{print int($5)}' | sort -n -r -k1)
+                ND=$(find "$ARG2" -type d | wc -l | tr -d ' ')
+                NF=$(find "$ARG2" -type f | wc -l | tr -d ' ')
+                hashes
+                normalization
+            else
+                echo "wrong arguments" >&2
+                exit 1
+            fi
+        else
+            echo "wrong arguments" >&2
+            exit 1
+        fi
+        ;;
+#tri argumenty - -i FILE_ERE DIR || -i FILE_ERE -n
+    3)
+        if [ "-i" = "$ARG1" ] ; then
+            if [ "$ARG2" ] ; then
+                if [ -d "$ARG3" ] ; then
+                    DIR=$ARG3
+                    MYSTRING=$(find "$DIR" -type f -print0 | xargs -0 ls -la | awk '{print $9}' | sort -n -r -k1 | grep -E -v "${ARG2}")
+                    for REGSTRING in $MYSTRING
+                    do
+                        MYSIZE=$(wc -c <"$REGSTRING")
+                        MYSIZES="$MYSIZES $MYSIZE"
+                    done
+                    ND=$(find "$ARG3" -type d | grep -E -v -c "${ARG2}")
+                    NF=$(find "$ARG3" -type f | grep -E -v -c "${ARG2}")
+                    hashes
+                elif [ "-n" = "$ARG3" ] ; then
+                    MYSTRING=$(find . -type f -print0 | xargs -0 ls -la | awk '{print $9}' | sort -n -r -k1 | grep -E -v "${ARG2}")
+                    for REGSTRING in $MYSTRING
+                    do
+                        MYSIZE=$(wc -c <"$REGSTRING")
+                        MYSIZES="$MYSIZES $MYSIZE"
+                    done
+                    ND=$(find . -type d | grep -E -v -c "${ARG2}")
+                    NF=$(find . -type f | grep -E -v -c "${ARG2}")
+                    hashes
+                    normalization
+                else
+                    echo "wrong arguments" >&2
+                    exit 1
+                fi
+            else
+                echo "wrong arguments" >&2
+                exit 1 
+            fi
+        else
+            echo "wrong arguments" >&2
+            exit 1
+        fi
+        ;;
+#styri argumenty - -i FILE_ERE -n DIR
+    4)
+        if [ "-i" = "$ARG1" ] ; then
+            if [ "$ARG2" ] ; then
+                if [ "-n" = "$ARG3" ] ; then
+                    if [ -d "$ARG4" ] ; then
+                        DIR=$ARG4
+                        MYSTRING=$(find "$DIR" -type f -print0 | xargs -0 ls -la | awk '{print $9}' | sort -n -r -k1 | grep -E -v "${ARG2}")
+                        for REGSTRING in $MYSTRING
+                        do
+                            MYSIZE=$(wc -c <"$REGSTRING")
+                            MYSIZES="$MYSIZES $MYSIZE"
+                        done
+                        ND=$(find "$ARG4" -type d | grep -E -v -c "${ARG2}")
+                        NF=$(find "$ARG4" -type f | grep -E -v -c "${ARG2}")
+                        hashes
+                        normalization
+                    else
+                        echo "wrong arguments" >&2
+                        exit 1
+                    fi
+                else
+                    echo "wrong arguments" >&2
+                    exit 1 
+                fi
+            else
+                echo "wrong arguments" >&2
+                exit 1
+            fi
+        else
+            echo "wrong arguments" >&2
+            exit 1
+        fi
+        ;;
+    *) 
+        echo "wrong arguments $nhash" >&2
+        exit 1
+        ;;
+esac
+#vypis histogramu
+ echo "Root Directory: $DIR"
+ echo "Directories: $ND"
+ echo "All files: $NF"
+ echo "file size histogram:"
+ echo "  <100 B  : $HIST1"
+ echo "  <1 KiB  : $HIST2" 
+ echo "  <10 KiB : $HIST3"
+ echo "  <100 KiB: $HIST4"
+ echo "  <1 MiB  : $HIST5"
+ echo "  <10 MiB : $HIST6"
+ echo "  <100 MiB: $HIST7"
+ echo "  <1 GiB  : $HIST8"
+ echo "  <=1 GiB : $HIST9"
