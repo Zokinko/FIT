@@ -1,0 +1,332 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[left=2cm,text={17cm, 24cm},top=3cm]{geometry}
+\usepackage[IL2]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{graphics}
+\usepackage{times}
+\usepackage[czech]{babel}
+\usepackage{algorithm2e}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{pdflscape}
+
+
+\begin{document}
+\begin{titlepage}
+\begin{center}
+\textsc{\Huge Fakulta informačních technologií\\
+Vysoké učení technické v~Brně}\\
+\vspace{\stretch{0.382}}
+\LARGE Typografie a publikování -- 3. projekt\\
+\Huge{Tabulky a obrázky}\\
+\vspace{\stretch{0.618}}
+\Large \today \hfill         Tomáš Hrúz (xhruzt00)
+\newpage
+\end{center}
+\end{titlepage}
+
+\section{Úvodní strana}
+Název práce umístěne do zlatého řezu~a nezapomeňte uvést dnešní datum a~vaše jméno a~příjmení.
+
+\section{Tabulky}
+Pro sázení tabulek můžeme použít buď prostředí \verb/tabbing/ nebo prostředí \verb/tabular/.
+
+\subsection{Prostředí \texttt{tabbing}}
+Při použití \verb/tabbing/ vypadá tabulka následovně:
+\begin{tabbing}
+\hspace*{3cm}\=\hspace*{1.5cm}\= \kill
+\textbf{Ovoce} \> \textbf{Cena} \> \textbf{Množství} \\
+Jablka\> 25,90 \> 3 kg \\
+Hrušky\> 27,40 \> 2,5 kg \\
+Vodní melouny \> 35,- \> 1 kus
+\end{tabbing}
+\bigskip
+
+
+Toto prostředí se dá také použít pro sázení algoritmů, ovšem vhodnější je použít 
+prostředí \verb/algorithm/ nebo \verb/algorithm2e/ (viz sekce 3).
+
+\subsection{Prostředí tabular}
+Další možností, jak vytvořit tabulku, je použít prostředí tabular. Tabulky pak budou vypadat takto\footnote{Kdyby byl problem s\texttt{ cline,} zkuste se podívat třeba sem:\href{http://www.abclinuxu.cz/tex/poradna/show/325037}{http://www.abclinuxu.cz/tex/poradna/show/325037}.} :
+\bigskip
+\begin{table}[ht]
+\catcode`\-=12
+\begin{center}
+\begin{tabular}{| l | c | r |} \hline
+& \multicolumn{2}{|c|}{\textbf{Cena}} \\ \cline{2-3}
+\textbf{Měna} & \textbf{nákup} & \textbf{prodej} \\ \hline
+EUR & 25,615 & 27,20\\
+GBP & 29,899 & 31,80\\
+USD & 22,571 & 25,51 \\ \hline
+\end{tabular}
+\caption{Tabulka kurzů k~dnešnímu dni}
+\label{kurzy}
+\end{center}
+\end{table}
+
+\begin{table}[h]
+\catcode`\-=12
+\begin{center}		
+\begin{tabular}[p]{| c | c |}\hline
+$ A $	 & $ {\neg}A $	\\ \hline
+\textbf{P} & N	\\ \hline
+\textbf{O} & O~\\ \hline
+\textbf{X} & X	\\ \hline
+\textbf{N} & P	\\ \hline
+\end{tabular}
+\begin{tabular}[p]{| c | c | c | c | c | c |}
+\hline
+\multicolumn{2}{| c |}{\multirow{2}{*}{$ A \wedge B $}} & \multicolumn{4}{c |}{$ B $}\\ \cline{3-6}
+\multicolumn{2}{| c |}{} & \textbf{P} & \textbf{O} & \textbf{X}	& \textbf{N} \\ \hline
+\multirow{4}{*}{$ A $} & \textbf{P} & P & O~& X & N \\ \cline{2-6}
+& \textbf{O} & O~& O~& N & N \\ \cline{2-6}
+& \textbf{X} & X & N & X & N \\ \cline{2-6}
+& \textbf{N} & N & N & N & N \\ \hline
+\end{tabular}
+\begin{tabular}[p]{| c | c | c | c | c | c |}
+\hline
+\multicolumn{2}{| c |}{\multirow{2}{*}{$ A \vee B $}} & \multicolumn{4}{c |}{$ B $}\\ \cline{3-6}
+\multicolumn{2}{| c |}{} & \textbf{P} & \textbf{O} & \textbf{X}	& \textbf{N} \\ \hline
+\multirow{4}{*}{$ A $} & \textbf{P} & P & P & P & P \\ \cline{2-6}
+& \textbf{O} & P & O~& P & O~\\ \cline{2-6}
+& \textbf{X} & P & P & X & X \\ \cline{2-6}
+& \textbf{N} & P & O~& X & N \\ \hline
+\end{tabular}
+\begin{tabular}[p]{| c | c | c | c | c | c |}
+\hline
+\multicolumn{2}{| c |}{\multirow{2}{*}{$ A \rightarrow B $}} & \multicolumn{4}{c |}{$ B $}\\ \cline{3-6}
+\multicolumn{2}{| c |}{} & \textbf{P} & \textbf{O} & \textbf{X}	& \textbf{N} \\ \hline
+\multirow{4}{*}{$ A $} & \textbf{P} & P & O~& X & N \\ \cline{2-6}
+& \textbf{O} & P & O~& P & O~\\ \cline{2-6}
+& \textbf{X} & P & P & X & X \\ \cline{2-6}
+& \textbf{N} & P & P & P & P \\ \hline
+\end{tabular}
+\caption{Protože Kleeneho trojhodnotová logika už je \uv{zastaralá}, uvádíme si zde příklad čtyřhodnotové logiky}
+\label{logika}
+	\end{center}
+	\end{table}
+
+\pagebreak
+
+\section{Algoritmy}
+\label{algoritmus}
+Pokud budeme chtít vysázet algoritmus, můžeme použít prostředí \verb/algorithm/\footnote{Pro nápovědu, jak zacházet s~prostředím algorithm, můžeme zkusit tuhle stránku:\\ \href{http://ftp.cstug.cz/pub/tex/CTAN/macros/latex/contrib/algorithms/algorithms.pdf}{http://ftp.cstug.cz/pub/tex/CTAN/macros/latex/contrib/algorithms/algorithms.pdf}.} nebo \verb/algorithm2e/\footnote{Pro \texttt{algorithm2e} zase tuhle:
+\href{http://ftp.cstug.cz/pub/tex/CTAN/macros/latex/contrib/algorithm2e/algorithm2e.pdf}{http://ftp.cstug.cz/pub/tex/CTAN/macros/latex/contrib/algorithm2e/algorithm2e.pdf}.}.
+Příklad použití prostředí \verb/algorithm2e/ viz Algoritmus 1.
+
+\begin{algorithm}[H]
+\caption{\textsc{FastSLAM}}
+\KwIn{$ (X_{t - 1}, u_t, z_t) $}
+\KwOut{$ X_t $} 
+$ \overline{X_t} = X_t = 0 $ \\
+\For{$ k = 1 \textrm{\emph{ to }} M $}
+{
+$ x_t^{[k]} = \emph{sample\_motion\_model}(u_t, x_{t - 1}^{[k]}) $ \\
+$ \omega_t^{[k]} = \emph{measurement\_model}(z_t, x_t^{[k]}, m_{t - 1}) $ \\
+$ m_t^{[k]} = updated\_occupancy\_grid(z_t, x_t^{[k]}, m_{t - 1}^{[k]}) $ \\
+$ \overline{X_t} = \overline{X_t} + \langle x_x^{[m]}, \omega_t^{[m]}  \rangle $ \\
+}
+\For{$ k = 1 \textrm{\emph{ to }} M $}
+{
+draw $ i $ with probability $ \approx\omega_t^{[i]} $ \\
+add $ \langle x_x^{[k]}, m_t^{[k]} \rangle\textrm{ to } X_t $ \\
+}
+\Return{$ X_t $}
+\end{algorithm}
+
+\section{Obrázky}
+Do našich článků můžeme samozřejmě vkládat obrázky. Pokud je obrázkem fotografie,
+můžeme klidně použít bitmapový soubor. Pokud by to ale mělo být nějaké schéma nebo
+něco podobného, je dobrým zvykem takovýto obrázek vytvořit vektorově.
+
+\begin{figure}[h]
+\begin{center}
+\scalebox{0.4}{\includegraphics{etiopan.eps}\reflectbox{\includegraphics{etiopan.eps}}}
+\caption{Malý Etiopánek a~jeho bratříček}
+\label{etiopan}
+\end{center}
+\end{figure}
+
+
+\newpage
+Rozdíl medzi vektorovým\dots
+
+\begin{figure}[h]
+\begin{center}
+\scalebox{0.4}{\includegraphics{oniisan.eps}}
+\caption{Vektorový obrázek}
+\label{vektor}
+\end{center}
+\end{figure}
+
+\dots a~bitmapovým obrázkem
+
+\begin{figure}[h]
+\begin{center}
+\scalebox{0.6}{\includegraphics{oniisan2.eps}}
+\caption{Bitmapový obrázek}
+\label{bitmap}
+\end{center}
+\end{figure}
+
+se projeví například pri zvětšení.\\
+Odkazy (nejen ty) na obrázky~\ref{etiopan},~\ref{vektor} a~\ref{bitmap}, na  
+tabulky~\ref{kurzy} a~\ref{logika} a také na algoritmus~\ref{algoritmus} jsou udělány pomocí 
+křížových odkazů. Pak je ovšem potřeba zdrojový soubor přeložit dvakrát.
+\quad
+
+Vektorové obrázky lze vytvořit i~přímo v~\LaTeX u, například pomocí prostředí 
+\verb/picture/.
+
+\newpage
+\begin{landscape}
+\begin{figure}[h]
+\setlength{\unitlength}{1mm}
+\centering
+\begin{picture}(200, 110)
+\linethickness{1pt}
+\put(0, 0){\framebox(200, 100){}} % rám
+
+\put(30, 70){\circle{20}} %slnko
+
+\linethickness{1.5mm}
+\put(5,5){\line(1,0){190}} %zem
+
+\linethickness{0.6mm}
+\put(20,5){\line(0,0){30}}
+\put(20,35){\line(1,0){100}}
+\put(120,35){\line(0,-1){30}}
+\put(120,5){\line(0,0){75}}
+\put(120,80){\line(1,0){20}}
+\put(140,80){\line(0,-1){75}}
+\put(140,80){\line(0,0){10}}
+\put(140,90){\line(1,0){30}}
+\put(170,90){\line(0,-1){85}} %obrysy budovy
+
+\linethickness{0.5mm}
+\put(40,5){\line(0,0){20}}
+\put(70,5){\line(0,0){20}}
+\linethickness{0.8mm}
+\put(38,25){\line(1,0){34}} %vchod
+
+\linethickness{0.3mm}
+\put(41,5){\line(0,0){3}}
+\put(69,5){\line(0,0){3}}
+\put(41,8){\line(1,0){28}}
+\put(43,8){\line(0,0){3}}
+\put(67,8){\line(0,0){3}}
+\put(43,11){\line(1,0){24}} %schody
+
+\put(150,10){\line(0,0){80}}
+\put(160,10){\line(0,0){80}}
+\put(150,10){\line(1,0){10}}
+\put(150,20){\line(1,0){10}}
+\put(150,30){\line(1,0){10}}
+\put(150,40){\line(1,0){10}}
+\put(150,50){\line(1,0){10}}
+\put(150,60){\line(1,0){10}}
+\put(150,70){\line(1,0){10}}
+\put(150,80){\line(1,0){10}}
+
+\linethickness{0.1mm}
+\put(150,14){\line(1,0){10}}
+\put(150,24){\line(1,0){10}}
+\put(150,34){\line(1,0){10}}
+\put(150,44){\line(1,0){10}}
+\put(150,54){\line(1,0){10}}
+\put(150,64){\line(1,0){10}}
+\put(150,74){\line(1,0){10}}
+\put(150,84){\line(1,0){10}}
+
+\put(151,10){\line(0,0){4}}
+\put(152,10){\line(0,0){4}}
+\put(153,10){\line(0,0){4}}
+\put(154,10){\line(0,0){4}}
+\put(155,10){\line(0,0){4}}
+\put(156,10){\line(0,0){4}}
+\put(157,10){\line(0,0){4}}
+\put(158,10){\line(0,0){4}}
+\put(159,10){\line(0,0){4}}
+
+\put(151,20){\line(0,0){4}}
+\put(152,20){\line(0,0){4}}
+\put(153,20){\line(0,0){4}}
+\put(154,20){\line(0,0){4}}
+\put(155,20){\line(0,0){4}}
+\put(156,20){\line(0,0){4}}
+\put(157,20){\line(0,0){4}}
+\put(158,20){\line(0,0){4}}
+\put(159,20){\line(0,0){4}}
+
+\put(151,30){\line(0,0){4}}
+\put(152,30){\line(0,0){4}}
+\put(153,30){\line(0,0){4}}
+\put(154,30){\line(0,0){4}}
+\put(155,30){\line(0,0){4}}
+\put(156,30){\line(0,0){4}}
+\put(157,30){\line(0,0){4}}
+\put(158,30){\line(0,0){4}}
+\put(159,30){\line(0,0){4}}
+
+\put(151,40){\line(0,0){4}}
+\put(152,40){\line(0,0){4}}
+\put(153,40){\line(0,0){4}}
+\put(154,40){\line(0,0){4}}
+\put(155,40){\line(0,0){4}}
+\put(156,40){\line(0,0){4}}
+\put(157,40){\line(0,0){4}}
+\put(158,40){\line(0,0){4}}
+\put(159,40){\line(0,0){4}}
+
+\put(151,50){\line(0,0){4}}
+\put(152,50){\line(0,0){4}}
+\put(153,50){\line(0,0){4}}
+\put(154,50){\line(0,0){4}}
+\put(155,50){\line(0,0){4}}
+\put(156,50){\line(0,0){4}}
+\put(157,50){\line(0,0){4}}
+\put(158,50){\line(0,0){4}}
+\put(159,50){\line(0,0){4}}
+
+\put(151,60){\line(0,0){4}}
+\put(152,60){\line(0,0){4}}
+\put(153,60){\line(0,0){4}}
+\put(154,60){\line(0,0){4}}
+\put(155,60){\line(0,0){4}}
+\put(156,60){\line(0,0){4}}
+\put(157,60){\line(0,0){4}}
+\put(158,60){\line(0,0){4}}
+\put(159,60){\line(0,0){4}}
+
+\put(151,70){\line(0,0){4}}
+\put(152,70){\line(0,0){4}}
+\put(153,70){\line(0,0){4}}
+\put(154,70){\line(0,0){4}}
+\put(155,70){\line(0,0){4}}
+\put(156,70){\line(0,0){4}}
+\put(157,70){\line(0,0){4}}
+\put(158,70){\line(0,0){4}}
+\put(159,70){\line(0,0){4}}
+
+\put(151,80){\line(0,0){4}}
+\put(152,80){\line(0,0){4}}
+\put(153,80){\line(0,0){4}}
+\put(154,80){\line(0,0){4}}
+\put(155,80){\line(0,0){4}}
+\put(156,80){\line(0,0){4}}
+\put(157,80){\line(0,0){4}}
+\put(158,80){\line(0,0){4}}
+\put(159,80){\line(0,0){4}} %balkony
+
+
+
+
+
+
+\end{picture}
+\caption{Vektorový obrázek moderních kolejí.}
+\end{figure}
+\end{landscape}
+\end{document}
