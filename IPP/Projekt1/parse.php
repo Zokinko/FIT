@@ -23,7 +23,9 @@ else
 }
 
 /*
-*processing input text to required form for better handling
+*processing input text in input() function -> comment trimming, white spaces remove,..
+*first_line() checks header of input string
+*variable array_top contains
 */
 $stripped_string = input();
 first_line($stripped_string[0]);
@@ -39,9 +41,11 @@ for($i=1; $i < $array_top ;$i++)
 
 /*
 *Final output printout
+*First of all print xml header
+*then print instructions in xml format with generator() in cycle
 */
 echo ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
-echo ("<program language=\"IPPcode20\">\n");
+echo ("<program language=\"IPPcode21\">\n");
 $countrik = 1;
 for($i=1; $i < $array_top ;$i++) 
 {
@@ -49,12 +53,7 @@ for($i=1; $i < $array_top ;$i++)
     $countrik++;
 }
 echo ("</program>\n");
-
-
-//---------------------------------------------------------------------------------
-
-
-
+//End of Main---------------------------------------------------------------------------------
 
 /*
 *Help
@@ -63,7 +62,7 @@ function help()
 {
     echo ("------------------------------------------------------------------------\n");
     echo ("Skript typu filtr (parse.php v jazyce PHP 7.4) načte ze standardního\n");
-    echo ("vstupu zdrojový kód v IPPcode20, zkontroluje lexikální a syntaktickou\n");
+    echo ("vstupu zdrojový kód v IPPcode21, zkontroluje lexikální a syntaktickou\n");
     echo ("správnost kódu a vypíše na standardní výstup XML reprezentaci programu\n");
     echo ("dle specifikace v sekci.\n");
     echo ("Parametry programu:\n");
@@ -105,11 +104,12 @@ function input()
 
 /*
 *First line check
+*First line must be ".ippcode21" and it is CASE INSENSITIVE
 */
 function first_line($line)
 {
     $line = strtolower($line);
-    if($line != ".ippcode20")
+    if($line != ".ippcode21")
     {
         fprintf (STDERR, "Wrong header\n");
         die(21);
@@ -126,11 +126,11 @@ function trim_comments($input_string)
 }
 
 /*
-*Argument check of Variable from .IPPCode20
+*Argument check of Variable from .IPPCode21
 */
 function variable($var) 
 {
-    $aux = preg_match('/^(GF|LF|TF)@([a-zA-Z0-9]|-|_|\*|\$|\%|\&|\!|\?)([a-zA-Z0-9]|-|_|\*|\$|\%|\&|\!|\?)*$/', $var); 
+    $aux = preg_match('/^(GF|LF|TF)@([a-zA-Z]|-|_|\*|\$|\%|\&|\!|\?)([a-zA-Z0-9]|-|_|\*|\$|\%|\&|\!|\?)*$/', $var); 
     if ($aux == 0)
     {
         fprintf (STDERR, "Lexical or Syntax error\n");
@@ -139,7 +139,7 @@ function variable($var)
 }
 
 /*
-*Argument check of Symbol from .IPPCode20
+*Argument check of Symbol from .IPPCode21
 */
 function symbol($sym) 
 {
@@ -186,7 +186,7 @@ function symbol($sym)
             else return 104;
         }
     }
-    elseif ((preg_match('/^(GF|LF|TF)@.*$/', $sym) == 1))
+    elseif ((preg_match('/^(GF|LF|TF)@([a-zA-Z]|-|_|\*|\$|\%|\&|\!|\?)([a-zA-Z0-9]|-|_|\*|\$|\%|\&|\!|\?)*$/', $sym) == 1))
     {
         variable($sym);
         return 105;
@@ -204,11 +204,11 @@ function symbol($sym)
 }
 
 /*
-*Argument check of Label from .IPPCode20
+*Argument check of Label from .IPPCode21
 */
 function label($lab)
 {
-    $aux = preg_match('/^([a-zA-Z0-9]|-|_|\*|\$|\%|\&|\!|\?)([a-zA-Z0-9]|-|_|\*|\$|\%|\&|\!|\?)*$/', $lab);
+    $aux = preg_match('/^([a-zA-Z]|-|_|\*|\$|\%|\&|\!|\?)([a-zA-Z0-9]|-|_|\*|\$|\%|\&|\!|\?)*$/', $lab);
     if ($aux == 0)
     {
         fprintf (STDERR, "Lexical or Syntax error\n");
@@ -218,7 +218,7 @@ function label($lab)
 }
 
 /*
-*Argument check of Type from .IPPCode20
+*Argument check of Type from .IPPCode21
 */
 function type($typ)
 {
@@ -233,7 +233,7 @@ function type($typ)
 
 /*
 *Instruction check
-*Number of arguments for given instruction
+*Check number of arguments for given instruction
 *Check correctness of arguments with functions variable(),symbol(),label(),type()
 */
 function parser($line)
@@ -246,472 +246,110 @@ function parser($line)
         switch($line[0]) 
         {
         case 'MOVE':
-            if(count($line)== 3)
-            {
+        case 'INT2CHAR':
+        case 'TYPE':
+        case 'STRLEN':
+            if(count($line)== 3){
             variable($line[1]);
             symbol($line[2]);
-            }
-            else
-            {
+            } else {
                 fprintf (STDERR, "Lexical or Syntax error\n");
                 die(23);
             } 
             break;
-        
         case 'CREATEFRAME':
-            if(count($line)== 1)
-            {
-
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;
-        
         case 'PUSHFRAME':
-            if(count($line)== 1)
-            {
-
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;
-        
         case 'POPFRAME':
-            if(count($line)== 1)
-            {
-
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;
-        
-        case 'DEFVAR':
-            if(count($line)== 2)
-            {
-                variable($line[1]);
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;
-        
-        case 'CALL':
-            if(count($line)== 2)
-            {
-                label($line[1]);
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;
-        
         case 'RETURN':
-            if(count($line)== 1)
-            {
-
-            }
-            else
-            {
+        case 'BREAK':
+            if(count($line)== 1){
+            }else{
                 fprintf (STDERR, "Lexical or Syntax error\n");
                 die(23);
             } 
             break;
-        
-        case 'PUSHS':
-            if(count($line)== 2)
-            {
-                symbol($line[1]);
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;
-        
+        case 'DEFVAR':
         case 'POPS':
-            if(count($line)== 2)
-            {
+            if(count($line)== 2){
                 variable($line[1]);
-            }
-            else
-            {
+            } else {
                 fprintf (STDERR, "Lexical or Syntax error\n");
                 die(23);
             } 
-            break;
-        
+            break;      
+        case 'CALL':
+        case 'JUMP':
+        case 'LABEL':
+            if(count($line)== 2){
+                label($line[1]);
+            } else {
+                fprintf (STDERR, "Lexical or Syntax error\n");
+                die(23);
+            } 
+            break;      
+        case 'PUSHS':
+        case 'WRITE':
+        case 'EXIT':
+        case 'DPRINT':
+            if(count($line)== 2){
+                symbol($line[1]);
+            } else {
+                fprintf (STDERR, "Lexical or Syntax error\n");
+                die(23);
+            } 
+            break;            
         case 'ADD':
-            if(count($line)== 4)
-            {
-                variable($line[1]);
-                symbol($line[2]);
-                symbol($line[3]);
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;
-        
         case 'SUB':
-            if(count($line)== 4)
-            {
-                variable($line[1]);
-                symbol($line[2]);
-                symbol($line[3]);
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;
-        
         case 'MUL':
-            if(count($line)== 4)
-            {
-                variable($line[1]);
-                symbol($line[2]);
-                symbol($line[3]);
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;
-        
-        case 'IDIV':
-            if(count($line)== 4)
-            {
-                variable($line[1]);
-                symbol($line[2]);
-                symbol($line[3]);
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;
-        
+        case 'IDIV':    
         case 'LT':
-            if(count($line)== 4)
-            {
-                variable($line[1]);
-                symbol($line[2]);
-                symbol($line[3]);
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;
-        
         case 'GT':
-            if(count($line)== 4)
-            {
-                variable($line[1]);
-                symbol($line[2]);
-                symbol($line[3]);
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;
-        
         case 'EQ':
-            if(count($line)== 4)
-            {
-                variable($line[1]);
-                symbol($line[2]);
-                symbol($line[3]);
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;
-        
         case 'AND':
-            if(count($line)== 4)
-            {
-                variable($line[1]);
-                symbol($line[2]);
-                symbol($line[3]);
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;
-        
         case 'OR':
-            if(count($line)== 4)
-            {
-                variable($line[1]);
-                symbol($line[2]);
-                symbol($line[3]);
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;
-        
         case 'NOT':
-            if(count($line)== 4)
-            {
-                variable($line[1]);
-                symbol($line[2]);
-                symbol($line[3]);
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;
-        
-        case 'INT2CHAR':
-            if(count($line)== 3)
-            {
-                variable($line[1]);
-                symbol($line[2]);
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;
-        
         case 'STRI2INT':
-            if(count($line)== 4)
-            {
+        case 'CONCAT':
+        case 'GETCHAR':
+        case 'SETCHAR':
+            if(count($line)== 4){
                 variable($line[1]);
                 symbol($line[2]);
                 symbol($line[3]);
-            }
-            else
-            {
+            } else {
+                fprintf (STDERR, "Lexical or Syntax error\n");
+                die(23);
+            } 
+            break;                      
+        case 'JUMPIFEQ':
+        case 'JUMPIFNEQ':    
+            if(count($line)== 4){
+                label($line[1]);
+                symbol($line[2]);
+                symbol($line[3]);
+            } else {
                 fprintf (STDERR, "Lexical or Syntax error\n");
                 die(23);
             } 
             break;
-        
         case 'READ':
-            if(count($line)== 3)
-            {
+            if(count($line)== 3){
                 variable($line[1]);
                 type($line[2]);
-            }
-            else
-            {
+            } else {
                 fprintf (STDERR, "Lexical or Syntax error\n");
                 die(23);
             } 
-            break;
-        
-        case 'WRITE':
-            if(count($line)== 2)
-            {
-                symbol($line[1]);
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;
-        
-        case 'CONCAT':
-            if(count($line)== 4)
-            {
-                variable($line[1]);
-                symbol($line[2]);
-                symbol($line[3]);
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;
-        
-        case 'STRLEN':
-            if(count($line)== 3)
-            {
-                variable($line[1]);
-                symbol($line[2]);
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;
-        
-        case 'GETCHAR':
-            if(count($line)== 4)
-            {
-                variable($line[1]);
-                symbol($line[2]);
-                symbol($line[3]);
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;
-        
-        case 'SETCHAR':
-            if(count($line)== 4)
-            {
-                variable($line[1]);
-                symbol($line[2]);
-                symbol($line[3]);
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;
-        
-        case 'TYPE':
-            if(count($line)== 3)
-            {
-                variable($line[1]);
-                symbol($line[2]);
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;
-        
-        case 'LABEL':
-            if(count($line)== 2)
-            {
-                label($line[1]);
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;
-        
-        case 'JUMP':
-            if(count($line)== 2)
-            {
-                label($line[1]);
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;
-        
-        case 'JUMPIFEQ':
-            if(count($line)== 4)
-            {
-                label($line[1]);
-                symbol($line[2]);
-                symbol($line[3]);
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;
-        
-        case 'JUMPIFNEQ':
-            if(count($line)== 4)
-            {
-                label($line[1]);
-                symbol($line[2]);
-                symbol($line[3]);
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;
-         
-        case 'EXIT':
-            if(count($line)== 2)
-            {
-                symbol($line[1]);
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;
-         
-        case 'DPRINT':
-            if(count($line)== 2)
-            {
-                symbol($line[1]);
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;
-         
-        case 'BREAK':
-            if(count($line)== 1)
-            {
-
-            }
-            else
-            {
-                fprintf (STDERR, "Lexical or Syntax error\n");
-                die(23);
-            } 
-            break;    
-
+            break;                
         default:
-        fprintf (STDERR, "Wrong code in IPPcode20\n");
+        fprintf (STDERR, "Wrong code in IPPcode21\n");
         die(22);
         break;
-
         }
     } 
     else
     {
-        fprintf (STDERR, "Wrong code in IPPcode20\n");
+        fprintf (STDERR, "Wrong code in IPPcode21\n");
         die(22);
     } 
 }
@@ -774,6 +412,7 @@ function generator($stripped_string)
 
 /*
 *Assist function for generator() which checks type in XML representation
+*return codes 101-106 are used in generator() to determine XML representation output
 */
 function symgen($sym)
 {
@@ -828,7 +467,6 @@ function symgen($sym)
     else 
     {
         return 666;
-    }
-    
+    }   
 }
 ?>
